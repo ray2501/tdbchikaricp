@@ -182,7 +182,6 @@ Below is an exmaple:
 
     package require tdbc::hikaricp
 
-    set className    {org.postgresql.ds.PGSimpleDataSource}
     set configFile   /home/danilo/postgresql.config
 
     tdbc::hikaricp::connection create db $configFile
