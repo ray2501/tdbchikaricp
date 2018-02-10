@@ -82,10 +82,10 @@ java::import java.io.StringReader
         }
 
         java::try {
-            set config [ java::new HikariConfig $configFile ]
             set noCloseByHere 0
 
             if {$datasource == 0} {
+                set config [ java::new HikariConfig $configFile ]
                 set DataSourceI [ java::new HikariDataSource $config ]
             } else {
                 # If user gives us a HikariDataSource variable, use it
