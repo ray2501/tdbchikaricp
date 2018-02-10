@@ -69,8 +69,9 @@ java::import java.io.StringReader
     variable readonly
     variable transaction
     variable useprepared
+    variable noCloseByHere
 
-    constructor {configFile args} {
+    constructor {configFile {datasource 0} args} {
         next
 
         if {[llength $args] % 2 != 0} {
@@ -82,7 +83,16 @@ java::import java.io.StringReader
 
         java::try {
             set config [ java::new HikariConfig $configFile ]
-            set DataSourceI [ java::new HikariDataSource $config ]
+            set noCloseByHere 0
+
+            if {$datasource == 0} {
+                set DataSourceI [ java::new HikariDataSource $config ]
+            } else {
+                # If user gives us a HikariDataSource variable, use it
+                set DataSourceI $datasource
+                set noCloseByHere 1
+            }
+
             set ConnectionI [ $DataSourceI getConnection ]
         } catch {TclException ex} {
             error "a Tcl error occurred"
@@ -213,7 +223,10 @@ java::import java.io.StringReader
         unset mystats
 
         $ConnectionI close
-        $DataSourceI close
+
+        if {$noCloseByHere == 0} {
+            $DataSourceI close
+        }
 
         next
     }

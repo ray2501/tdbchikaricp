@@ -65,7 +65,7 @@ If you try to uninstall on Windows platform,
 Commands
 =====
 
-tdbc::hikaricp::connection create db configFile ?-option value...?
+tdbc::hikaricp::connection create db configFile ?datasource? ?-option value...?
 
 Connection to a HakariCP database is established by invoking `tdbc::hikaricp::connection create`,
 passing it the name to be used as a connection handle, followed by a property file path.
@@ -198,4 +198,25 @@ Below is an exmaple:
     $statement close
 
     db close
+
+And another example, create a HikariDataSource and transfer it to our driver,
+
+    package require java
+    package require tdbc::hikaricp
+
+    set configFile   /home/danilo/tmp/postgresql.config
+    set config [ java::new HikariConfig $configFile ]
+    set DataSourceI [ java::new HikariDataSource $config ]
+    tdbc::hikaricp::connection create db $configFile $DataSourceI
+
+    set statement [db prepare {select VERSION()}]
+    puts "Current PostgreSQL:"
+    $statement foreach row {
+        puts "[dict get $row version]"
+    }
+
+    $statement close
+
+    db close
+    $DataSourceI close
 
