@@ -107,12 +107,15 @@ Below is an example (on Linux platform):
 	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-api-1.7.25.jar
 	export CLASSPATH=$CLASSPATH:/home/danilo/HikariCP-2.7.7.jar
 
+If you want to disable slf4j warning, try to add slf4j-nop to your CLASSPATH:
+
+	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-nop-1.7.25.jar
+
 ## Example: HSQLDB
 
 Below is a config file (hsqldb.config):
 
     dataSourceClassName=org.hsqldb.jdbc.JDBCDataSource
-    connectionTimeout=30000
     dataSource.user=SA
     dataSource.password=
     dataSource.databaseName=test.db
