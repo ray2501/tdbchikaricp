@@ -32,7 +32,6 @@ package provide tdbc::hikaricp 0.1
 
 }
 
-java::import java.util.Properties
 java::import java.sql.Connection
 java::import java.sql.DriverManager
 java::import java.sql.ResultSet
