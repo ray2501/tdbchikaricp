@@ -252,9 +252,9 @@ so it is possible to create another DataSource object and use it
 
 
 And another example, using [Alibaba Druid](https://github.com/alibaba/druid) DataSource
-to test. You need add the package in your CLASSPATH:
+to test. You need add Druid package in your CLASSPATH:
 
-    export CLASSPATH=$CLASSPATH:/home/danilo/Programs/druid-1.1.8.jar
+    export CLASSPATH=$CLASSPATH:/home/danilo/druid-1.1.8.jar
 
 Then you can create a Alibaba Druid DataSource and transfer it to our driver,
 
