@@ -204,6 +204,9 @@ And another example, create a HikariDataSource and transfer it to our driver,
     package require java
     package require tdbc::hikaricp
 
+    java::import com.zaxxer.hikari.HikariConfig
+    java::import com.zaxxer.hikari.HikariDataSource
+
     set configFile   /home/danilo/tmp/postgresql.config
     set config [ java::new HikariConfig $configFile ]
     set DataSourceI [ java::new HikariDataSource $config ]

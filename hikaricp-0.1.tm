@@ -32,8 +32,6 @@ package provide tdbc::hikaricp 0.1
 
 }
 
-java::import com.zaxxer.hikari.HikariConfig
-java::import com.zaxxer.hikari.HikariDataSource
 java::import java.util.Properties
 java::import java.sql.Connection
 java::import java.sql.DriverManager
@@ -85,6 +83,9 @@ java::import java.io.StringReader
             set noCloseByHere 0
 
             if {$datasource == 0} {
+                java::import com.zaxxer.hikari.HikariConfig
+                java::import com.zaxxer.hikari.HikariDataSource
+
                 set config [ java::new HikariConfig $configFile ]
                 set DataSourceI [ java::new HikariDataSource $config ]
             } else {
