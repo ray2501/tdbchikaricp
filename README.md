@@ -210,7 +210,69 @@ And another example, create a HikariDataSource and transfer it to our driver,
     set configFile   /home/danilo/tmp/postgresql.config
     set config [ java::new HikariConfig $configFile ]
     set DataSourceI [ java::new HikariDataSource $config ]
-    tdbc::hikaricp::connection create db $configFile $DataSourceI
+    tdbc::hikaricp::connection create db "" $DataSourceI
+
+    set statement [db prepare {select VERSION()}]
+    puts "Current PostgreSQL:"
+    $statement foreach row {
+        puts "[dict get $row version]"
+    }
+
+    $statement close
+
+    db close
+    $DataSourceI close
+
+User can create a DataSource and transfer it to our driver,
+so it is possible to create another DataSource object and use it
+(if setup CLASSPATH correctly). Below is an example:
+
+    package require java
+    package require tdbc::hikaricp
+
+    java::import org.postgresql.ds.PGSimpleDataSource
+
+    set DataSourceI [ java::new PGSimpleDataSource ]
+    $DataSourceI setUser            "danilo"
+    $DataSourceI setPassword        "danilo"
+    $DataSourceI setDatabaseName    "danilo"
+    $DataSourceI setServerName      "localhost"
+
+    tdbc::hikaricp::connection create db "" $DataSourceI
+
+    set statement [db prepare {select VERSION()}]
+    puts "Current PostgreSQL:"
+    $statement foreach row {
+        puts "[dict get $row version]"
+    }
+
+    $statement close
+
+    db close
+
+
+And another example, using [Alibaba Druid](https://github.com/alibaba/druid) DataSource
+to test. You need add the package in your CLASSPATH:
+
+    export CLASSPATH=$CLASSPATH:/home/danilo/Programs/druid-1.1.8.jar
+
+Then you can create a Alibaba Druid DataSource and transfer it to our driver,
+
+    package require java
+    package require tdbc::hikaricp
+
+    java::import com.alibaba.druid.pool.DruidDataSource
+
+    set DataSourceI [ java::new DruidDataSource ]
+    $DataSourceI setDriverClassName "org.postgresql.Driver"
+    $DataSourceI setUsername        "danilo"
+    $DataSourceI setPassword        "danilo"
+    $DataSourceI setUrl             "jdbc:postgresql://localhost:5432/danilo"
+    $DataSourceI setInitialSize     5
+    $DataSourceI setMinIdle         1
+    $DataSourceI setMaxActive       10
+
+    tdbc::hikaricp::connection create db "" $DataSourceI
 
     set statement [db prepare {select VERSION()}]
     puts "Current PostgreSQL:"
