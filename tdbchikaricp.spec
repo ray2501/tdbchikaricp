@@ -34,7 +34,7 @@ cat > %{buildroot}%{tcl_noarchdir}/%{name}%{version}/pkgIndex.tcl << 'EOD'
 # Tcl package index file
 #
 package ifneeded tdbc::hikaricp 0.1 \
-    [list source [file join tdbc hikaricp-0.1.tm]]
+    [list source [file join $dir tdbc hikaricp-0.1.tm]]
 EOD
 
 %files
