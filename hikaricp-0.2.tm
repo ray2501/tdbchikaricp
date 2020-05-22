@@ -23,7 +23,7 @@ if { [info exists ::env(TCLLIBPATH) ] } {
     }
 }
 
-package provide tdbc::hikaricp 0.1
+package provide tdbc::hikaricp 0.2
 
 
 ::namespace eval ::tdbc::hikaricp {

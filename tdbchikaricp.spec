@@ -4,7 +4,7 @@
 
 Name:           tdbchikaricp
 BuildRequires:  tcl
-Version:        0.1
+Version:        0.2
 Release:        0
 Summary:        Tcl DataBase Connectivity Driver for HikariCP library
 Url:            https://github.com/ray2501/tdbchikaricp
@@ -33,8 +33,8 @@ cat > %{buildroot}%{tcl_noarchdir}/%{name}%{version}/pkgIndex.tcl << 'EOD'
 #
 # Tcl package index file
 #
-package ifneeded tdbc::hikaricp 0.1 \
-    [list source [file join $dir tdbc hikaricp-0.1.tm]]
+package ifneeded tdbc::hikaricp 0.2 \
+    [list source [file join $dir tdbc hikaricp-0.2.tm]]
 EOD
 
 %clean

@@ -42,11 +42,11 @@ Installation
 The tdbc::hikaricp driver requires Tcl >= 8.6, TDBC and tclBlend package.
 
 For Windows platform, if your Tcl lib folder is `C:\Tcl\lib`,
-then copy hikaricp-0.1.tm this file to below location:
+then copy hikaricp-0.2.tm this file to below location:
 
     C:\Tcl\lib\tcl8\8.6\tdbc
 
-For openSUSE (64bit), copy hikaricp-0.1.tm this file to below location:
+For openSUSE (64bit), copy hikaricp-0.2.tm this file to below location:
 
     /usr/lib64/tcl/tcl8/8.6/tdbc
 
