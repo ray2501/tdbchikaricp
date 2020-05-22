@@ -639,7 +639,7 @@ java::import java.io.StringReader
 
     variable -set {*}{
         -stmt -sql -sqltypes -ResultSetI -ResultSetMetaDataI -params -RowCount
-         -columns -columnCount -useprepared
+         -columns -columnCount -useprepared -TdbcHelper
     }
 
 
@@ -654,6 +654,7 @@ java::import java.io.StringReader
         set -columns {}
         set -columnCount  0
         set -sqltypes {}
+        set -TdbcHelper {}
 
         if {[llength $args] == 0} {
 
@@ -1014,6 +1015,12 @@ java::import java.io.StringReader
             "wrong # args: should be\
                      [lrange [info level 0] 0 1] statement ?dictionary?"
         }
+
+        if {[catch {
+            set -TdbcHelper [java::new tcl.lang.TdbcHelper ${-ResultSetI}]
+        }]} {
+            set -TdbcHelper {}
+        }
     }
 
 
@@ -1022,6 +1029,14 @@ java::import java.io.StringReader
         variable columnName
 
         set -columns {}
+
+        if {${-TdbcHelper} ne {}} {
+            foreach columnObj [java::listify [${-TdbcHelper} getColumns]] {
+                lappend -columns $columnObj
+            }
+            return ${-columns}
+        }
+
         set i 1
         while { $i <= ${-columnCount} } {
             set columnName [ ${-ResultSetMetaDataI} getColumnLabel $i ]
@@ -1049,7 +1064,15 @@ java::import java.io.StringReader
         set row {}
         set i 1
 
-        if { [ ${-ResultSetI} next ] == 1 } {
+        if {[${-ResultSetI} next]} {
+
+            if {${-TdbcHelper} ne {}} {
+                foreach value [java::listify [${-TdbcHelper} getRowData]] {
+                    lappend row $value
+                }
+                return 1
+            }
+
             while { $i <= ${-columnCount} } {
                 set columnName [ ${-ResultSetMetaDataI} getColumnLabel $i ]
                 set columnType [ ${-ResultSetMetaDataI} getColumnTypeName $i ]
@@ -1088,7 +1111,20 @@ java::import java.io.StringReader
 
         set row [dict create]
 
-        if { [  ${-ResultSetI} next ] == 1 } {
+        if {[${-ResultSetI} next]} {
+
+            if {${-TdbcHelper} ne {}} {
+                if {${-columns} eq {}} {
+                    foreach columnObj [java::listify [${-TdbcHelper} getColumns]] {
+                        lappend -columns $columnObj
+                    }
+                }
+                foreach column ${-columns} value [java::listify [${-TdbcHelper} getRowData]] {
+                    dict set row $column $value
+                }
+                return 1
+            }
+
             while { $i <= ${-columnCount} } {
                 set columnName [ ${-ResultSetMetaDataI} getColumnLabel $i ]
                 set columnType [ ${-ResultSetMetaDataI} getColumnTypeName $i ]
