@@ -13,7 +13,7 @@ that provides access to Java classes from Tcl. tclBlend is implemented using
 [tclJBlend](http://wiki.tcl.tk/47668) is a fork of TclBlend, a Tcl extension that
 uses JNI to communicate with a Java interpreter.
 
-[HikariCP](http://brettwooldridge.github.io/HikariCP/) is a solid high-performance
+[HikariCP](https://github.com/brettwooldridge/HikariCP) is a solid high-performance
 JDBC connection pool.
 
 The library consists of a single [Tcl Module](http://tcl.tk/man/tcl8.6/TclCmd/tm.htm#M9) file.
@@ -104,12 +104,12 @@ You need add 3 packages in your CLASSPATH:
 Below is an example (on Linux platform):
 
 	export CLASSPATH=$CLASSPATH:/home/danilo/hsqldb/lib/hsqldb.jar
-	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-api-1.7.25.jar
-	export CLASSPATH=$CLASSPATH:/home/danilo/HikariCP-2.7.7.jar
+	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-api-1.7.30.jar
+	export CLASSPATH=$CLASSPATH:/home/danilo/HikariCP-3.4.5.jar
 
 If you want to disable slf4j warning, try to add slf4j-nop to your CLASSPATH:
 
-	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-nop-1.7.25.jar
+	export CLASSPATH=$CLASSPATH:/home/danilo/slf4j-nop-1.7.30.jar
 
 ## Example: HSQLDB
 
@@ -254,7 +254,7 @@ so it is possible to create another DataSource object and use it
 And another example, using [Alibaba Druid](https://github.com/alibaba/druid) DataSource
 to test. You need add Druid package in your CLASSPATH:
 
-    export CLASSPATH=$CLASSPATH:/home/danilo/druid-1.1.8.jar
+    export CLASSPATH=$CLASSPATH:/home/danilo/druid-1.1.22.jar
 
 Then you can create a Alibaba Druid DataSource and transfer it to our driver,
 
